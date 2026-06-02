@@ -1,0 +1,3 @@
+/* Apply matugen-generated Material colors to GTK4 / libadwaita apps
+   (nautilus, etc.). colors.css is regenerated on wallpaper change. */
+@import url("colors.css");

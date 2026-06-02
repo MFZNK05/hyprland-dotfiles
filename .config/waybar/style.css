@@ -1,0 +1,198 @@
+/* -----------------------------------------------------
+ * Waybar style — cloned & adapted from ML4W "ml4w" theme.
+ * De-frameworked: single self-contained file, native modules only.
+ * Colors come from matugen-generated colors.css (cyan palette).
+ * ----------------------------------------------------- */
+
+/* matugen palette (primary/surface/on_surface/secondary/...) */
+@import "colors.css";
+
+/* ML4W semantic aliases -> matugen names (the "default" variant mapping) */
+@define-color backgroundlight @surface;
+@define-color backgrounddark @surface;
+@define-color workspacesbackground1 @surface;
+@define-color workspacesbackground2 @secondary;
+@define-color bordercolor @on_surface;
+@define-color textcolor1 @on_surface;
+@define-color textcolor2 @surface;
+@define-color textcolor3 @on_surface;
+@define-color iconcolor @on_surface;
+
+/* -----------------------------------------------------
+ * General
+ * ----------------------------------------------------- */
+* {
+    font-family: "Fira Sans Semibold", "JetBrainsMono Nerd Font", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 0px;
+}
+
+window#waybar {
+    background-color: rgba(0,0,0,0.8);
+    border-bottom: 0px solid #ffffff;
+    background: transparent;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+.modules-left  { margin: 2px 0px 2px 8px; }
+.modules-right { margin: 2px 8px 2px 0px; }
+.modules-center{ margin: 2px 0px 2px 0px; }
+
+/* -----------------------------------------------------
+ * Workspaces
+ * ----------------------------------------------------- */
+#workspaces {
+    background: @workspacesbackground1;
+    margin: 2px 1px 3px 1px;
+    padding: 0px 1px;
+    border-radius: 15px;
+    border: 0px;
+    font-weight: bold;
+    opacity: 0.8;
+    font-size: 13px;
+    color: @textcolor1;
+}
+
+#workspaces button {
+    padding: 0px 5px;
+    margin: 4px 3px;
+    border-radius: 15px;
+    border: 0px;
+    color: @textcolor2;
+    background-color: @workspacesbackground2;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    color: @on_primary;
+    background: @primary;
+    border-radius: 15px;
+    min-width: 28px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+    color: @on_secondary;
+    background: @secondary;
+    border-radius: 15px;
+}
+
+/* -----------------------------------------------------
+ * Tooltips
+ * ----------------------------------------------------- */
+tooltip {
+    border-radius: 16px;
+    background-color: @backgroundlight;
+    padding: 20px;
+    margin: 0px;
+}
+tooltip label { color: @textcolor1; }
+
+/* -----------------------------------------------------
+ * Window title
+ * ----------------------------------------------------- */
+#window {
+    background: @backgroundlight;
+    margin: 5px 15px 5px 0px;
+    padding: 2px 10px 0px 10px;
+    border-radius: 12px;
+    color: @textcolor1;
+    font-size: 13px;
+    opacity: 0.8;
+}
+window#waybar.empty #window { background-color: transparent; }
+
+/* -----------------------------------------------------
+ * App menu / launcher button (left)
+ * ----------------------------------------------------- */
+#custom-appmenu {
+    background-color: @backgrounddark;
+    font-size: 13px;
+    color: @textcolor1;
+    border-radius: 15px;
+    padding: 0px 12px 0px 12px;
+    margin: 3px 17px 3px 0px;
+    opacity: 0.8;
+    border: 3px solid @bordercolor;
+}
+
+/* -----------------------------------------------------
+ * Clock
+ * ----------------------------------------------------- */
+#clock {
+    background-color: @backgrounddark;
+    font-size: 13px;
+    color: @textcolor1;
+    border-radius: 15px;
+    padding: 1px 10px 0px 10px;
+    margin: 3px 0px 3px 0px;
+    opacity: 0.8;
+    border: 3px solid @bordercolor;
+}
+
+/* -----------------------------------------------------
+ * Pulseaudio / Network / Bluetooth / Battery pills
+ * ----------------------------------------------------- */
+#backlight,
+#pulseaudio,
+#custom-mic,
+#network,
+#bluetooth,
+#bluetooth.on,
+#bluetooth.connected,
+#battery {
+    background-color: @backgroundlight;
+    font-size: 13px;
+    color: @textcolor1;
+    border-radius: 15px;
+    padding: 2px 10px 0px 10px;
+    margin: 5px 15px 5px 0px;
+    opacity: 0.8;
+}
+
+#pulseaudio.muted { background-color: @backgrounddark; color: @textcolor1; }
+
+/* Spacing: brightness, then gap, then speaker+mic tight, then gap before bluetooth */
+#backlight  { margin-right: 16px; }  /* brightness -> sound: gap   */
+#pulseaudio { margin-right: 6px; }   /* speaker -> mic: tight      */
+#custom-mic { margin-right: 16px; }  /* mic -> bluetooth: gap      */
+#bluetooth  { margin-left: 2px; }
+
+#battery.charging, #battery.plugged {
+    color: @textcolor1;
+    background-color: @backgroundlight;
+}
+
+@keyframes blink {
+    to { background-color: @backgroundlight; color: @textcolor2; }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: @textcolor3;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* -----------------------------------------------------
+ * Idle inhibitor
+ * ----------------------------------------------------- */
+#idle_inhibitor {
+    margin-right: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    opacity: 0.8;
+    color: @iconcolor;
+}
+#idle_inhibitor.activated { color: #dc2f2f; }
+
+/* -----------------------------------------------------
+ * Tray
+ * ----------------------------------------------------- */
+#tray { padding: 0px 15px 0px 0px; }
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention { -gtk-icon-effect: highlight; }

@@ -1,0 +1,35 @@
+* {
+    background-image: none;
+    box-shadow: none;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 16px;
+}
+
+window {
+    background-color: rgba(26, 17, 16, 0.85);
+}
+
+button {
+    color: #f1dedc;
+    background-color: #1a1110;
+    border: 2px solid #2a2120;
+    border-radius: 18px;
+    margin: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28%;
+    transition: all 0.2s ease;
+}
+
+button:focus, button:hover {
+    background-color: #ff9e64;
+    color: #1a1110;
+    border-color: #ff9e64;
+    background-size: 32%;
+}
+
+#lock     { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
+#logout   { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
+#suspend  { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
+#reboot   { background-image: image(url("/usr/share/wlogout/icons/reboot.png")); }
+#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")); }

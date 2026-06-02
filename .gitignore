@@ -1,0 +1,6 @@
+# machine-specific / generated state
+**/fish_variables
+**/completions/
+**/*.log
+.config/hypr/.current_wallpaper
+.config-backup-*/

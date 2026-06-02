@@ -1,0 +1,37 @@
+# Dependencies for these dotfiles (Ubuntu 26.04 / apt)
+
+# ---- apt packages (one line) ----
+sudo apt install -y \
+  hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
+  hyprpolkitagent hyprland-qtutils \
+  waybar rofi mako-notifier swaybg \
+  wl-clipboard cliphist grim slurp \
+  brightnessctl network-manager-gnome \
+  kitty fish \
+  pavucontrol blueman \
+  hyprlock hypridle wlogout
+
+# Assumed already present on a desktop install:
+#   pipewire, wireplumber  (audio; wpctl)
+#   nautilus               (file manager)
+#   fonts: Ubuntu          (UI font in rofi/wlogout)
+
+# ---- NOT in apt (install manually) ----
+# matugen  — color engine. Prebuilt binary:
+#   https://github.com/InioX/matugen/releases  -> extract -> ~/.local/bin/matugen
+#
+# JetBrainsMono Nerd Font — waybar/terminal glyphs:
+#   https://github.com/ryanoasis/nerd-fonts/releases -> ~/.local/share/fonts -> fc-cache -f
+#
+# starship — fish prompt:  https://starship.rs  (or: cargo/binary)
+#
+# VS Code — use the official Microsoft .deb, NOT the snap (snap = blurry + shell-env breakage):
+#   wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg >/dev/null
+#   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+#   sudo apt update && sudo apt install -y code
+#
+# Spotify — official deb repo (not snap):  https://www.spotify.com/download/linux/
+
+# ---- post-install ----
+# Brightness scroll/keys need the video group, then re-login:
+#   sudo usermod -aG video $USER
