@@ -31,6 +31,9 @@ else
     echo "   matugen image ~/.config/hypr/wallpapers/anime_skull.jpg --mode dark --prefer saturation"
 fi
 
+echo ":: Setting GNOME to dark theme (libadwaita/GTK apps follow this)"
+command -v gsettings >/dev/null 2>&1 && gsettings set org.gnome.desktop.interface color-scheme prefer-dark || true
+
 cat <<'EOF'
 
 Done. Remaining manual steps:
