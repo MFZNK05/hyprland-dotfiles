@@ -1,6 +1,6 @@
 /* Tokyo Night (Night) — STATIC rofi palette. */
 * {
-    background: rgba(26,27,38,0.7);
+    background: #1a1b26;
     primary: #7aa2f7;
     primary-fixed: #7aa2f7;
     primary-fixed-dim: #7aa2f7;
