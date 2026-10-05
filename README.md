@@ -17,7 +17,7 @@ with a waybar control center, rofi menus, lock/idle/power, and clipboard history
 | Launcher / menus | rofi (apps, wifi, sound, mic, bluetooth) |
 | Terminal | kitty (fish + starship) |
 | Notifications | mako |
-| Wallpaper | swaybg |
+| Wallpaper | mpvpaper (live video), swaybg fallback |
 | Colors | matugen (Material-You from wallpaper) |
 | Lock / idle / power | hyprlock · hypridle · wlogout |
 | Clipboard history | cliphist |
@@ -85,7 +85,9 @@ See **`packages.txt`** for the full dependency list (apt + the few non-apt tools
   `xwayland { force_zero_scaling = true }` (renders them sharp). Find XWayland apps:
   `hyprctl clients -j | python3 -c "import json,sys;[print(c['class']) for c in json.load(sys.stdin) if c['xwayland']]"`
 - **Brightness scroll needs the `video` group:** `sudo usermod -aG video $USER`, then re-login.
-- **Wallpaper uses `swaybg`, not hyprpaper** (hyprpaper rendered blank on this hardware).
+- **Wallpaper:** live video via `mpvpaper` when `~/.local/bin/mpvpaper` and
+  `~/Videos/tlou.webm` both exist (neither ships here; mpvpaper isn't in apt, build it).
+  Otherwise falls back to static `swaybg`. Not hyprpaper (rendered blank on this hardware).
 - **matugen** is the color engine — `Super+W` sets a wallpaper and regenerates every
   app's colors. matugen isn't in apt (prebuilt binary → `~/.local/bin`).
 - **fish + VS Code:** `conf.d/tmux-autostart.fish` is guarded with `isatty stdout`
