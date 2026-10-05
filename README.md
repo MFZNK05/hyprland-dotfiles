@@ -72,7 +72,7 @@ See **`packages.txt`** for the full dependency list (apt + the few non-apt tools
 | `Super+Shift+H/J` · `Super+Alt+K/L` | Move window in layout (left/down · up/right) |
 | `Super+Shift+L` / `Super+Shift+K` | Send window to external / laptop monitor |
 | `Super+1..0` / `Super+Shift+1..0` | Switch / move-to workspace |
-| `Super+W` | Wallpaper switcher (static image via swaybg + lockscreen) |
+| `Super+W` | Wallpaper switcher: `▶` live videos from `~/Videos` first, then images |
 | `Super+Shift+V` | Clipboard history (cliphist) |
 | `Super+Ctrl+L` | Lock (hyprlock) · `Super+Escape` power menu (wlogout) |
 | `Print` / `Super+Print` | Screenshot region / full → `~/Pictures/Screenshots` + clipboard |
@@ -88,9 +88,11 @@ See **`packages.txt`** for the full dependency list (apt + the few non-apt tools
   `xwayland { force_zero_scaling = true }` (renders them sharp). Find XWayland apps:
   `hyprctl clients -j | python3 -c "import json,sys;[print(c['class']) for c in json.load(sys.stdin) if c['xwayland']]"`
 - **Brightness scroll needs the `video` group:** `sudo usermod -aG video $USER`, then re-login.
-- **Wallpaper:** live video via `mpvpaper` when `~/.local/bin/mpvpaper` and
-  `~/Videos/tlou.webm` both exist (neither ships here; mpvpaper isn't in apt, build it).
-  Otherwise falls back to static `swaybg`. Not hyprpaper (rendered blank on this hardware).
+- **Wallpaper:** `Super+W` picks a live video (`mpvpaper`, from `~/Videos`) or an image
+  (`swaybg`); picking one kills the other. Login restores the last pick: video if
+  `~/.config/hypr/.current_live` exists, else the image in `.current_wallpaper` (which
+  hyprlock also uses). Videos only show if `~/.local/bin/mpvpaper` exists (not in apt,
+  build it; videos don't ship here). Not hyprpaper (rendered blank on this hardware).
 - **matugen** isn't in apt (prebuilt binary → `~/.local/bin`). Colors don't depend on it
   any more; it only matters if you restore wallpaper-driven theming.
 - **fish + VS Code:** `conf.d/tmux-autostart.fish` is guarded with `isatty stdout`
