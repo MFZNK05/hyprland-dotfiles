@@ -1,7 +1,6 @@
 # Hyprland Dotfiles
 
-My Hyprland rice on **Ubuntu 26.04** (Wayland) — a cyan/material theme that
-recolors itself from the wallpaper via [matugen](https://github.com/InioX/matugen),
+My Hyprland rice on **Ubuntu 26.04** (Wayland) — a static Tokyo Night (Night) theme,
 with a waybar control center, rofi menus, lock/idle/power, and clipboard history.
 
 > Built piece-by-piece and adapted to a native (apt-based, non-Nix) Ubuntu system.
@@ -18,7 +17,7 @@ with a waybar control center, rofi menus, lock/idle/power, and clipboard history
 | Terminal | kitty (fish + starship) |
 | Notifications | mako |
 | Wallpaper | mpvpaper (live video), swaybg fallback |
-| Colors | matugen (Material-You from wallpaper) |
+| Colors | Tokyo Night, static (matugen templates with the palette baked in) |
 | Lock / idle / power | hyprlock · hypridle · wlogout |
 | Clipboard history | cliphist |
 | Auth agent | hyprpolkitagent |
@@ -27,20 +26,24 @@ with a waybar control center, rofi menus, lock/idle/power, and clipboard history
 
 ```
 hypr/        hyprland.conf, hyprlock.conf, hypridle.conf, colors.conf,
-             scripts/ (wallpaper switcher, clipboard menu), wallpapers/
+             scripts/ (wallpaper switcher, clipboard menu, screenshot), wallpapers/
 waybar/      config.jsonc, style.css, colors.css, scripts/ (mic + rofi menus)
 rofi/        config.rasi (apps), menu.rasi (control menus), wifi.rasi, colors.rasi
-kitty/       kitty.conf, theme.conf (vibrant cyan, 0.75 bg transparency)
-matugen/     config.toml + templates/  (regenerates all colors from a wallpaper)
-gtk-3.0/ gtk-4.0/   gtk.css (imports matugen colors -> nautilus/GTK apps match)
+kitty/       kitty.conf, theme.conf (static Tokyo Night, opaque)
+matugen/     config.toml + templates/  (Tokyo Night hardcoded, no wallpaper placeholders)
+gtk-3.0/ gtk-4.0/   gtk.css (imports colors.css -> nautilus/GTK apps match)
 wlogout/     layout + themed style.css
 fish/        config.fish, conf.d/, functions/
 Code/User/   settings.json
 ```
 
-> `colors.*` files are matugen output (a starting palette). They regenerate
-> whenever you change the wallpaper (`Super+W`) — keep them so a fresh checkout
-> works before the first matugen run.
+Plus `.local/bin/hypridle-supervise` (restarts hypridle if it dies, logs to
+`$XDG_RUNTIME_DIR/hypridle.log`), installed by `install.sh`.
+
+> `colors.*` files are the Tokyo Night palette. matugen still runs on `Super+W`, but
+> its templates have the colors baked in, so it rewrites the same palette whatever
+> the wallpaper. To theme from the wallpaper again, put `{{colors...}}` placeholders
+> back in `matugen/templates/`.
 
 ## Install
 
@@ -69,10 +72,10 @@ See **`packages.txt`** for the full dependency list (apt + the few non-apt tools
 | `Super+Shift+H/J` · `Super+Alt+K/L` | Move window in layout (left/down · up/right) |
 | `Super+Shift+L` / `Super+Shift+K` | Send window to external / laptop monitor |
 | `Super+1..0` / `Super+Shift+1..0` | Switch / move-to workspace |
-| `Super+W` | Wallpaper switcher (recolors everything via matugen) |
+| `Super+W` | Wallpaper switcher (static image via swaybg + lockscreen) |
 | `Super+Shift+V` | Clipboard history (cliphist) |
 | `Super+Ctrl+L` | Lock (hyprlock) · `Super+Escape` power menu (wlogout) |
-| `Print` / `Super+Print` | Screenshot full / region → clipboard |
+| `Print` / `Super+Print` | Screenshot region / full → `~/Pictures/Screenshots` + clipboard |
 | Scroll on bar modules | volume / mic / brightness ±5% |
 
 ## Notes / gotchas (learned the hard way)
@@ -88,7 +91,7 @@ See **`packages.txt`** for the full dependency list (apt + the few non-apt tools
 - **Wallpaper:** live video via `mpvpaper` when `~/.local/bin/mpvpaper` and
   `~/Videos/tlou.webm` both exist (neither ships here; mpvpaper isn't in apt, build it).
   Otherwise falls back to static `swaybg`. Not hyprpaper (rendered blank on this hardware).
-- **matugen** is the color engine — `Super+W` sets a wallpaper and regenerates every
-  app's colors. matugen isn't in apt (prebuilt binary → `~/.local/bin`).
+- **matugen** isn't in apt (prebuilt binary → `~/.local/bin`). Colors don't depend on it
+  any more; it only matters if you restore wallpaper-driven theming.
 - **fish + VS Code:** `conf.d/tmux-autostart.fish` is guarded with `isatty stdout`
   so it doesn't break VS Code's shell-env probe.
