@@ -3,4 +3,5 @@
 **/completions/
 **/*.log
 .config/hypr/.current_wallpaper
+.config/hypr/.current_live
 .config-backup-*/
