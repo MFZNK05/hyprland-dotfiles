@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Keep hypridle alive and keep its log. Launched from hyprland.conf exec-once.
+# Why: a dead-or-wedged hypridle means no auto-lock and no suspend, with zero evidence.
+# The log tells you which happened, and whether it bound the right logind session:
+#   grep -E "Using dbus path|Got Lock from dbus|exited rc=" $XDG_RUNTIME_DIR/hypridle.log
+log="${XDG_RUNTIME_DIR:-/tmp}/hypridle.log"
+while true; do
+    printf '=== hypridle start %s ===\n' "$(date '+%F %T')" >> "$log"
+    hypridle >> "$log" 2>&1
+    rc=$?
+    printf '=== hypridle exited rc=%s %s ===\n' "$rc" "$(date '+%F %T')" >> "$log"
+    sleep 2
+done

@@ -20,6 +20,10 @@ cp -r "$DOT/.config/." "$HOME/.config/"
 echo ":: Making scripts executable"
 chmod +x "$HOME"/.config/hypr/scripts/*.sh "$HOME"/.config/waybar/scripts/*.sh 2>/dev/null || true
 
+echo ":: Installing helper scripts into ~/.local/bin"
+mkdir -p "$HOME/.local/bin"
+install -m 755 "$DOT"/.local/bin/* "$HOME/.local/bin/"
+
 echo ":: Linking current wallpaper (lockscreen + swaybg follow this)"
 ln -sf "$HOME/.config/hypr/wallpapers/anime_skull.jpg" "$HOME/.config/hypr/.current_wallpaper"
 
