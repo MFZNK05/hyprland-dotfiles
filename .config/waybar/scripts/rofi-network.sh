@@ -55,7 +55,25 @@ ssid="${choice#● }"; ssid="${ssid#  }"; ssid="${ssid%  ·  *}"
 if nmcli -t -f NAME connection show 2>/dev/null | grep -qx "$ssid"; then
     nmcli connection up id "$ssid" >/dev/null 2>&1 && notify "Connected to $ssid" || notify "Failed: $ssid"
 else
-    if nmcli device wifi connect "$ssid" >/dev/null 2>&1; then
+    security=$(nmcli -t -e no -f SSID,SECURITY device wifi list 2>/dev/null \
+        | awk -F: -v s="$ssid" '$1==s {print $NF; exit}')
+    if [[ "$security" == *802.1X* ]]; then
+        # WPA2-Enterprise: needs identity + password, not a plain PSK
+        user=$(printf '' | menu -p "Username ($ssid)")
+        [ -z "$user" ] && exit 0
+        pass=$(printf '' | menu -password -p "Password ($ssid)")
+        [ -z "$pass" ] && exit 0
+        nmcli connection add type wifi con-name "$ssid" ssid "$ssid" \
+            wifi-sec.key-mgmt wpa-eap 802-1x.eap peap 802-1x.phase2-auth mschapv2 \
+            802-1x.identity "$user" 802-1x.password "$pass" >/dev/null 2>&1
+        if nmcli connection up id "$ssid" >/dev/null 2>&1; then
+            notify "Connected to $ssid"
+        else
+            # Drop the bad profile so the next attempt re-prompts
+            nmcli connection delete id "$ssid" >/dev/null 2>&1
+            notify "Failed: $ssid" "Check username/password"
+        fi
+    elif nmcli device wifi connect "$ssid" >/dev/null 2>&1; then
         notify "Connected to $ssid"
     else
         pass=$(printf '' | menu -password -p "Password ($ssid)")

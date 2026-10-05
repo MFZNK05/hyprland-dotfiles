@@ -1,7 +1,8 @@
 {
     "workbench.startupEditor": "none",
     "C_Cpp.intelliSenseEngine": "disabled",
-    "workbench.colorTheme": "Pitch Black",
+    "claudeCode.preferredLocation": "panel",
     "chat.viewSessions.orientation": "stacked",
-    "makefile.configureOnOpen": false
+    "makefile.configureOnOpen": false,
+    "go.toolsManagement.autoUpdate": true
 }

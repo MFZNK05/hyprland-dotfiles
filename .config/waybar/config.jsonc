@@ -49,15 +49,15 @@
             ]
         },
         "scroll-step": 5,
-        "on-click": "$HOME/.config/waybar/scripts/rofi-sound.sh",
+        "on-click": "/home/littlefinger/.config/waybar/scripts/rofi-sound.sh",
         "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol",
         "tooltip-format": "{desc} - {volume}%"
     },
     "custom/mic": {
-        "exec": "$HOME/.config/waybar/scripts/mic.sh",
+        "exec": "/home/littlefinger/.config/waybar/scripts/mic.sh",
         "interval": 1,
-        "on-click": "$HOME/.config/waybar/scripts/rofi-mic.sh",
+        "on-click": "/home/littlefinger/.config/waybar/scripts/rofi-mic.sh",
         "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
         "on-click-right": "pavucontrol",
         "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SOURCE@ 5%+",
@@ -70,7 +70,7 @@
         "format-off": "",
         "format-disabled": "",
         "format-connected": " {num_connections}",
-        "on-click": "$HOME/.config/waybar/scripts/rofi-bluetooth.sh",
+        "on-click": "/home/littlefinger/.config/waybar/scripts/rofi-bluetooth.sh",
         "on-click-right": "blueman-manager",
         "tooltip-format": "{controller_alias}\n{status}",
         "tooltip-format-connected": "{controller_alias}\n{device_enumerate}"
@@ -94,12 +94,12 @@
     "network": {
         "format": "",
         "format-wifi": "",
-        "format-ethernet": "",
+        "format-ethernet": "󰈀",
         "format-linked": "",
         "format-disconnected": "",
         "format-disabled": "",
-        "on-click": "$HOME/.config/waybar/scripts/rofi-network.sh",
-        "on-click-right": "nm-connection-editor",
+        "on-click": "/home/littlefinger/.config/waybar/scripts/rofi-network.sh",
+        "on-click-right": "env XDG_CURRENT_DESKTOP=GNOME gnome-control-center wifi",
         "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}",
         "tooltip-format-ethernet": "{ifname}: {ipaddr}",
         "tooltip-format-disconnected": "Disconnected — click to enable/connect"
